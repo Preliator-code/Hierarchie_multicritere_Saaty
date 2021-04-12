@@ -1,0 +1,244 @@
+* { 
+  margin: 0; 
+  padding: 0;
+}
+html, body { 
+	min-height: 100vh; /* 1 */
+	display: flex; /* 2 */
+	flex-direction: column; /* 3 */
+	font : 12px/1.5 "Muli", "Helvetica Neue", Arial, Helvetica, sans-serif;
+	background-color: #AAAAAA;
+}
+
+#contenu {
+	flex-grow:1; /* 4 */
+}
+
+#header{
+	display: flex;
+	width: 100%;
+	height: 40px;
+	background-color: lightgrey;
+	box-shadow: 1px 1px 5px black;
+	margin-bottom: 15px;
+}
+
+#header h1{
+	display: inline-block;
+	margin: auto;
+	font-family: 'Kiwi Maru', serif;
+	font-size: 2em;
+	letter-spacing: 2px;
+}
+
+nav li{
+	display: inline-block;
+	padding: 10px 30px 0 0;
+	font-size: 1.2em;
+}
+
+nav a{
+	text-decoration: none;
+	background-color: grey;
+	color: lightgrey;
+	padding: 5px;
+	border-radius: 5px;
+	box-shadow: 1px 1px 1px black;
+}
+
+nav a:hover{
+	color: white;
+	box-shadow: 2px 2px 2px black;
+}
+
+form{
+	display: inline-block;
+	font-size: 2em;
+	width: 100%;
+}
+
+form > div{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 60px;
+}
+
+form > div label{
+	width: 230px;
+}
+
+input{
+	height: 20px;
+	padding-left: 10px;
+	border-radius: 20px;
+	outline: none;
+  	border: none;
+  	box-shadow: 2px 2px 1px black;
+}
+
+#conteneurTotal{
+	position: relative;
+	margin:0px auto;
+	width: 80%;
+/*	left: 10%;*/
+}
+
+#conteneurTotal h2{
+	font-size: 2em;
+	margin-bottom: 10px;
+	visibility: hidden;
+}
+
+#conteneurTotal h2 + div{
+	margin-bottom: 40px;
+}
+
+#conteneurEntreNbrClasses{
+	position: relative;
+}
+
+#nbrClass{
+	width: 50px;
+	height: 30px;
+	font-size: 1em;
+}
+
+#conteneurTabEnTete{
+	width: 100%;
+	text-align: justify;
+}
+
+.conteneurInput{
+	display: inline-block;
+	margin: 0 25px 0 0;
+}
+
+.conteneurInput label{
+	display: block;
+	color: white;
+	font-size: 1.5em;
+	margin-right: 10px;
+}
+
+.conteneurInput input{
+	width: 120px;
+	margin-bottom: 10px;
+}
+
+#conteneurTabMulti{
+	display: block;
+	font-size:1em;
+	color:white;
+}
+
+#conteneurTabMulti table{
+    background: rgba(63, 58, 58, 0.9);
+    overflow-x: hidden;
+    overflow-y: scroll;
+    min-height: 90px;
+    max-height: 300px;
+}
+
+#conteneurTabMulti th{
+	border: 1px solid #00BE87;
+	text-align: center;
+	padding: 6px;
+	font-weight: bold;
+	font-size: 1.3em;
+	overflow: hidden;
+}
+
+.enTete{
+	width: 80px;
+}
+
+#conteneurTabMulti table, td{
+	border: 1px solid #00BE87;
+	border-collapse: collapse;
+	padding: 5px;
+	text-align: center;
+	font-weight: normal;
+	overflow: hidden;
+}
+
+#conteneurTabMulti .inputCell{
+	width: 70px;
+	background-color: white;
+	text-align: center;
+}
+
+#conteneurInfos{
+	position: relative;
+	font-size: 1.7em;
+	visibility: hidden;
+}
+
+#conteneurInfos p{
+	margin-bottom: 15px;
+}
+
+.variable{
+	font-weight: bold;
+}
+
+.avertissement{
+	color: #A00000;
+	font-size: 13px;
+}
+
+#cr{
+	display: inline-block;
+	font-size: 1.1em;
+	border-radius: 15px;
+	color: white;
+	padding: 5px;
+}
+
+#alerteChamps{
+	margin-top: 10px;
+	text-align: left;
+}
+
+#alerteNbrCritere{
+	position: relative;
+	visibility: hidden;
+	left: 40px;
+}
+
+#alerteCr{
+	position: absolute;
+	visibility: hidden;
+	left: 400px;
+	bottom: -15px;
+}
+
+footer{
+	display: flex;
+	background-color:#464545;
+	height: 45px;
+	color: white;
+	align-items: center;
+	justify-content: center;
+}
+
+footer p{
+	font-size: 1.2em;
+	text-transform: uppercase;
+	text-shadow: 1px 1px 1px black;
+}
+
+#header + p{
+	font-size: 21px;
+	text-align: center;
+	margin-bottom: 16px;
+}
+
+#biblio h1{
+	margin: 10px 0 15px 10px;
+}
+
+#biblio p{
+	font-size: 16px;
+	margin: 10px 0 10px 10px;
+}

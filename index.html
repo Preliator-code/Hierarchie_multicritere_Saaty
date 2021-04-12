@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<!-- STYLE GOOGLE FONT -->
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href='https://fonts.googleapis.com/css?family=Muli:300' rel='stylesheet' type='text/css'>
+	<link href="https://fonts.googleapis.com/css2?family=Kiwi+Maru&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="css/style.css">
+	<script defer src="js/script.js"></script>
+	<script defer src="js/longFunction.js"></script>
+</head>
+<body>
+	<div id="header">
+		<h1>Méthode de hiérarchie multicritère (Saaty, 1980)</h1>
+		<nav>
+			<ul>
+				<li><a href="index.html">Matrice</a></li>
+				<li><a href="html/biblio.html">Biblio</a></li>
+			</ul>
+		</nav>
+	</div>
+	<form action="">
+		<div id="conteneurEntreNbrClasses">
+			<label for="nbrClass">Nombre de critères</label>
+			<input type="number" id="nbrClass" name="nbrClass" oninput="entreNbrClasses(this)">
+			<p id='alerteNbrCritere' class='avertissement'>Veuillez entrer un nombre supérieur à 2</p>
+		</div>
+	</form>
+	<div id="conteneurTotal">
+		<h2 class="titre">Nom des critères</h2>
+		<div id="conteneurTabEnTete"></div>
+		<h2 class="titre">Matrice de comparaison binaire</h2>
+		<div id="conteneurTabMulti"></div>
+		<h2 class="titre">Résumé</h2>
+		<div id="conteneurInfos">
+			<p>Valeur propre max de chaque facteur : <span class="variable" id="valeurPropre">-</span></p>
+			<p>Indice aléatoire (RI) : <span class="variable" id="ri" >-</span></p>
+			<p>Indice de cohérence (CI) : <span class="variable" id="ci">-</span></p>
+			<p>Ratio de cohérence (CR) : <span class="variable" id="cr">-</span></p>
+			<p id='alerteCr' class="avertissement">Le ration de cohérence est supérieur à 10%. Vous devriez revoir la matrice.</p>
+		</div>
+	</div>
+<!-- 	<footer>
+		<p>Développement K.CARIOU (2021), inspiré du FICHIER Excel de P. MAZAGOL</p>
+	</footer> -->
+</body>
+</html>
