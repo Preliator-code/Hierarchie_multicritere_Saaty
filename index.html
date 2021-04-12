@@ -34,13 +34,25 @@
 		<div id="conteneurTabEnTete"></div>
 		<h2 class="titre">Matrice de comparaison binaire</h2>
 		<div id="conteneurTabMulti"></div>
-		<h2 class="titre">Résumé</h2>
 		<div id="conteneurInfos">
-			<p>Valeur propre max de chaque facteur : <span class="variable" id="valeurPropre">-</span></p>
-			<p>Indice aléatoire (RI) : <span class="variable" id="ri" >-</span></p>
-			<p>Indice de cohérence (CI) : <span class="variable" id="ci">-</span></p>
-			<p>Ratio de cohérence (CR) : <span class="variable" id="cr">-</span></p>
-			<p id='alerteCr' class="avertissement">Le ration de cohérence est supérieur à 10%. Vous devriez revoir la matrice.</p>
+			<h2 class="titre">Résumé</h2>
+			<div class="elementResume">
+				<p>Valeur propre max de chaque facteur :</p>
+				<p class="variable" id="valeurPropre">-</p>
+			</div>
+			<div class="elementResume">
+				<p>Indice aléatoire (RI) :</p> 
+				<p class="variable" id="ri" >-</p>
+			</div>
+			<div id="test" class="elementResume">
+				<p>Indice de cohérence (CI) :</p>
+				<p class="variable" id="ci">-</p>
+			</div>
+			<div class="elementResume">
+				<p>Ratio de cohérence (CR) :</p> 
+				<p class="variable" id="cr">-</p>
+				<span id='alerteCr' class="avertissement">Le ration de cohérence est supérieur à 10%.<br>Vous devriez revoir la matrice.</span>
+			</div>
 		</div>
 	</div>
 <!-- 	<footer>

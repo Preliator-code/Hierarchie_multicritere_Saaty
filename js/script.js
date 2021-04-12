@@ -226,7 +226,7 @@ function termine(){
 	(parseInt(nbrClass.value) < 3) ? document.getElementById('alerteNbrCritere').style.visibility = 'visible' : "";
 	document.getElementById("conteneurInfos").style.visibility = 'hidden'
 	document.getElementById("alerteCr").style.visibility = 'hidden'
-	document.getElementById("alerteChamps").style.visibility = 'hidden'
+	document.getElementById("alerteChamps").style.display = 'none'
 	document.getElementsByClassName("titre")[2].style.visibility = 'hidden'
 }
 
@@ -348,7 +348,7 @@ function action(){
 
 		// SI TOUS LES INPUT EDITABLES NE SONT ENTRES....
 		if (comptEntree < ((nbrClass.value * nbrClass.value - nbrClass.value) / 2)) {
-			document.getElementById("alerteChamps").style.visibility = 'visible'
+			document.getElementById("alerteChamps").style.display = 'block'
 			document.getElementById("conteneurInfos").style.visibility = 'hidden'
 			document.getElementById("alerteCr").style.visibility = 'hidden'
 			document.getElementsByClassName("titre")[2].style.visibility = 'hidden'
@@ -357,7 +357,7 @@ function action(){
 		// SI TOUS LES INPUT EDITABLES SONT ENTRES...
 		if (comptEntree === ((nbrClass.value * nbrClass.value - nbrClass.value) / 2)) {
 			getColumnValues(inputTabMulti)
-			document.getElementById("alerteChamps").style.visibility = 'hidden'
+			document.getElementById("alerteChamps").style.display = 'none'
 			document.getElementById("conteneurInfos").style.visibility = 'visible'
 			document.getElementsByClassName("titre")[2].style.visibility = 'visible'
 		}
