@@ -142,7 +142,6 @@ function calculIndices(tabColumnFinal, inputTabMulti){
 	let numColumn = 0
 
 	tabColumnFinal.forEach(entree => {
-		console.log(entree);
 		// CONVERTIR LE TABLEAU EN NUMERIC
 		entree = entree.map(x => Number.parseFloat(x, 2))
 		// CALCULER LA SOMME DU TABLEAU
@@ -169,6 +168,7 @@ function calculIndices(tabColumnFinal, inputTabMulti){
 		})
 		// J'AJOUTE AU TABLEAU tabMean LA MOYENNE DES PREMIERES VALEURS DE CHAQUE TABLEAU
 		tabMean.push(average(tabFirstElement));
+		console.log(tabMean);
 	}
 
 	// --CALCUL DE "SOMME PONDEREE PAR LES PRIORITE". MEME PRINCIPE, MAIS AVEC LE TABLEAU DES INPUT, COLONNE PAR COLONNE
@@ -302,14 +302,11 @@ function action(){
 	inputTabEnTete.forEach(inputTete => inputTete.addEventListener("input", () =>{
 		let comptPosition = 0
 		let numeroEnTete = parseInt(inputTete.id.substring(5,70)) + 1
-		console.log(numeroEnTete);
 		tabEnTete.forEach(tabTete => {
-			console.log(tabTete.value);
 			if ((comptPosition === numeroEnTete) || (comptPosition === parseInt(nbrClass.value) + numeroEnTete)) {
 				tabTete.innerHTML = inputTete.value
 			}
 			comptPosition +=1;
-			console.log(comptPosition);
 		})
 	}))
 
@@ -348,18 +345,18 @@ function action(){
 
 		// SI TOUS LES INPUT EDITABLES NE SONT ENTRES....
 		if (comptEntree < ((nbrClass.value * nbrClass.value - nbrClass.value) / 2)) {
-			document.getElementById("alerteChamps").style.display = 'block'
-			document.getElementById("conteneurInfos").style.visibility = 'hidden'
-			document.getElementById("alerteCr").style.visibility = 'hidden'
-			document.getElementsByClassName("titre")[2].style.visibility = 'hidden'
+			// document.getElementById("alerteChamps").style.display = 'block'
+			// document.getElementById("conteneurInfos").style.visibility = 'hidden'
+			// document.getElementById("alerteCr").style.visibility = 'hidden'
+			// document.getElementsByClassName("titre")[2].style.visibility = 'hidden'
 		}
 
 		// SI TOUS LES INPUT EDITABLES SONT ENTRES...
 		if (comptEntree === ((nbrClass.value * nbrClass.value - nbrClass.value) / 2)) {
 			getColumnValues(inputTabMulti)
-			document.getElementById("alerteChamps").style.display = 'none'
-			document.getElementById("conteneurInfos").style.visibility = 'visible'
-			document.getElementsByClassName("titre")[2].style.visibility = 'visible'
+			// document.getElementById("alerteChamps").style.display = 'none'
+			// document.getElementById("conteneurInfos").style.visibility = 'visible'
+			// document.getElementsByClassName("titre")[2].style.visibility = 'visible'
 		}
 	}))
 }
