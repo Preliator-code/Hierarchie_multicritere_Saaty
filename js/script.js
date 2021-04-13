@@ -1,6 +1,15 @@
+// RECUPERER LES DIV DE MA PAGE POUR POUVOIR LES AFFICHER/CACHER
+let conteneurAllWithoutCritere = document.getElementsByClassName("conteneur")
+// CONVERTIR EN LISTE
+conteneurAllWithoutCritere = Array.prototype.slice.call(conteneurAllWithoutCritere)
+// ENLEVER LA DIV QUI AFFICHE LE NOMBRE DE CRITERE (PAS NECESSAIRE DE CACHER/AFFICHER CELLE CI)
+conteneurAllWithoutCritere.shift()
+
 let conteneurEnTete = document.getElementById('conteneurTabEnTete');
 
 let conteneurMulti = document.getElementById('conteneurTabMulti');
+
+let conteneurTablePoids = document.getElementById('conteneurTablePoids').innerHTML;
 
 let titre = Array.prototype.slice.call(document.getElementsByTagName('h2'))
 titre.pop()
@@ -97,9 +106,6 @@ function getColumnValues(inputTabMulti){
 			}
 		}
 	})
-	// console.log(tabColumn);
-	// console.log(tabValue);
-	// console.log(convertToDoubleDimension(tabColumn, tabValue));
 	calculIndices(convertToDoubleDimension(tabColumn, tabValue), inputTabMulti)
 }
 
@@ -212,8 +218,34 @@ function calculIndices(tabColumnFinal, inputTabMulti){
 		document.getElementById("cr").style.backgroundColor = '#BC0000'
 		document.getElementById("alerteCr").style.visibility = 'visible'
 	}
-
+	makeTabWeight(tabMean)
 }
+
+function makeTabWeight(tabPoids){
+	let tableString = "<table id='tabPoids'>";
+	let tableHead = "<thead><tr><th>Nom critère</th><th>Poids</th></thead>"
+	let ligne = ""
+	let inputEnTete = "";
+
+	let comptCell = 0
+
+	for (var i = 0; i < nbrClass.value; i++) {
+		ligne += `<tr><td class='enTete'>Critère ${(i<9) ? ('0' + (i + 1)) : (i + 1)}</td><td>${tabPoids[i].toFixed(2)}</td></tr>`
+	}
+	tableString += tableHead
+	tableString += ligne
+	tableString += "</table>";
+
+	console.log(tableString);
+
+	// J'AJOUTE AU CONTENU DE LA DIV conteneurTablePoids EXISTANT LE TABLEAU
+	document.getElementById('conteneurTablePoids').innerHTML = conteneurTablePoids + tableString;
+}
+
+
+
+
+
 
 function entreNbrClasses(nbrClasses){
 	let nbrClass = nbrClasses;
@@ -221,18 +253,22 @@ function entreNbrClasses(nbrClasses){
 }
 
 function termine(){
-	titre.forEach(entree => entree.style.visibility = 'hidden')
-	document.getElementById('conteneurTotal').style.visibility = 'hidden';
 	(parseInt(nbrClass.value) < 3) ? document.getElementById('alerteNbrCritere').style.visibility = 'visible' : "";
-	document.getElementById("conteneurInfos").style.visibility = 'hidden'
-	document.getElementById("alerteCr").style.visibility = 'hidden'
-	document.getElementById("alerteChamps").style.display = 'none'
-	document.getElementsByClassName("titre")[2].style.visibility = 'hidden'
+	conteneurAllWithoutCritere.forEach(entree => entree.style.visibility = 'hidden')
+	document.getElementById("alerteCr").style.display = 'none'
+	// titre.forEach(entree => entree.style.visibility = 'hidden')
+	// document.getElementById('conteneurTotal').style.visibility = 'hidden';
+	// document.getElementById("conteneurInfos").style.visibility = 'hidden'
+	// document.getElementById("alerteCr").style.visibility = 'hidden'
+	// document.getElementById("alerteChamps").style.display = 'none'
+	// document.getElementsByClassName("titre")[2].style.visibility = 'hidden'
 }
 
 function action(){
-	document.getElementById('conteneurTotal').style.visibility = 'visible';
-	titre.forEach(entree => entree.style.visibility = 'visible')
+	conteneurAllWithoutCritere[0].style.visibility = 'visible'
+	conteneurAllWithoutCritere[1].style.visibility = 'visible'
+	// document.getElementById('conteneurTotal').style.visibility = 'visible';
+	// titre.forEach(entree => entree.style.visibility = 'visible')
 	document.getElementById('alerteNbrCritere').style.visibility = 'hidden';
 	let tableString = "<table id='tabMulti'>";
 	// ICI, RAJOUTER UN "th" VIDE POUR CREER SIMPLEMENT LES ENTETE VERTICAUX ET HORIZONTAUX
@@ -345,7 +381,10 @@ function action(){
 
 		// SI TOUS LES INPUT EDITABLES NE SONT ENTRES....
 		if (comptEntree < ((nbrClass.value * nbrClass.value - nbrClass.value) / 2)) {
-			// document.getElementById("alerteChamps").style.display = 'block'
+			conteneurAllWithoutCritere[2].style.visibility = 'hidden'
+			conteneurAllWithoutCritere[3].style.visibility = 'hidden'
+			document.getElementById("alerteChamps").style.display = 'block'
+			document.getElementById("alerteCr").style.display = 'none'
 			// document.getElementById("conteneurInfos").style.visibility = 'hidden'
 			// document.getElementById("alerteCr").style.visibility = 'hidden'
 			// document.getElementsByClassName("titre")[2].style.visibility = 'hidden'
@@ -354,7 +393,10 @@ function action(){
 		// SI TOUS LES INPUT EDITABLES SONT ENTRES...
 		if (comptEntree === ((nbrClass.value * nbrClass.value - nbrClass.value) / 2)) {
 			getColumnValues(inputTabMulti)
-			// document.getElementById("alerteChamps").style.display = 'none'
+			document.getElementById("alerteChamps").style.display = 'none'
+			document.getElementById("alerteCr").style.display = 'block'
+			conteneurAllWithoutCritere[2].style.visibility = 'visible'
+			conteneurAllWithoutCritere[3].style.visibility = 'visible'
 			// document.getElementById("conteneurInfos").style.visibility = 'visible'
 			// document.getElementsByClassName("titre")[2].style.visibility = 'visible'
 		}

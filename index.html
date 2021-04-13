@@ -22,19 +22,24 @@
 			</ul>
 		</nav>
 	</div>
+	<div id="conteneurEntreNbrClasses" class="conteneur">
+		<label for="nbrClass">Nombre de critères</label>
+		<input type="number" id="nbrClass" name="nbrClass" oninput="entreNbrClasses(this)">
+		<p id='alerteNbrCritere' class='avertissement'>Veuillez entrer un nombre supérieur à 2</p>
+	</div>
 	<div id="conteneurTotal">
-		<div id="conteneurEntreNbrClasses" class="conteneur">
-			<label for="nbrClass">Nombre de critères</label>
-			<input type="number" id="nbrClass" name="nbrClass" oninput="entreNbrClasses(this)">
-			<p id='alerteNbrCritere' class='avertissement'>Veuillez entrer un nombre supérieur à 2</p>
-		</div>
 		<div id="conteneurNomCriteres" class="conteneur">
 			<h2 class="titre">Nom des critères</h2>
 			<div id="conteneurTabEnTete"></div>
 		</div>
-		<div id="conteneurMatrice" class="conteneur">
-			<h2 class="titre">Matrice de comparaison binaire</h2>
-			<div id="conteneurTabMulti"></div>
+		<div id="conteneurFlex">
+			<div id="conteneurMatrice" class="conteneur">
+				<h2 class="titre">Matrice de comparaison binaire</h2>
+				<div id="conteneurTabMulti"></div>
+			</div>
+			<div id="conteneurTablePoids" class="conteneur">
+				<h2 class="titre">Table des poids</h2>
+			</div>
 		</div>
 		<div id="conteneurInfos" class="conteneur">
 			<h2 class="titre">Résumé</h2>
@@ -55,10 +60,6 @@
 				<p class="variable" id="cr">-</p>
 				<span id='alerteCr' class="avertissement">Le ration de cohérence est supérieur à 10%.<br>Vous devriez revoir la matrice.</span>
 			</div>
-		<div id="conteneurTablePoids" class="conteneur">
-			<h2 class="titre">Table des poids</h2>
-			<div id="conteneurTabPoids"></div>
-		</div>
 		</div>
 		<!-- 	<footer>
 			<p>Développement K.CARIOU (2021), inspiré du FICHIER Excel de P. MAZAGOL</p>
