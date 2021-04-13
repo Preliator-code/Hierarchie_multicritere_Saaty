@@ -142,7 +142,6 @@ function calculIndices(tabColumnFinal, inputTabMulti){
 	let numColumn = 0
 
 	tabColumnFinal.forEach(entree => {
-		console.log(entree);
 		// CONVERTIR LE TABLEAU EN NUMERIC
 		entree = entree.map(x => Number.parseFloat(x, 2))
 		// CALCULER LA SOMME DU TABLEAU
@@ -169,6 +168,7 @@ function calculIndices(tabColumnFinal, inputTabMulti){
 		})
 		// J'AJOUTE AU TABLEAU tabMean LA MOYENNE DES PREMIERES VALEURS DE CHAQUE TABLEAU
 		tabMean.push(average(tabFirstElement));
+		console.log(tabMean);
 	}
 
 	// --CALCUL DE "SOMME PONDEREE PAR LES PRIORITE". MEME PRINCIPE, MAIS AVEC LE TABLEAU DES INPUT, COLONNE PAR COLONNE
