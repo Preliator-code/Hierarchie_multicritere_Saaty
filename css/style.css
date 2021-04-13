@@ -51,23 +51,6 @@ nav a:hover{
 	box-shadow: 2px 2px 2px black;
 }
 
-form{
-	display: inline-block;
-	font-size: 2em;
-	width: 100%;
-}
-
-form > div{
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	margin-bottom: 60px;
-}
-
-form > div label{
-	width: 230px;
-}
-
 input{
 	height: 20px;
 	padding-left: 10px;
@@ -77,27 +60,36 @@ input{
   	box-shadow: 2px 2px 1px black;
 }
 
-#conteneurTotal{
-	position: relative;
-	margin:0px auto;
-	width: 80%;
-/*	left: 10%;*/
-}
-
-#conteneurTotal h2{
-	font-size: 2em;
-	margin-bottom: 10px;
-	visibility: hidden;
-}
+/*---- ENTREE NOMBRE DE CLASSES ----*/
 
 #conteneurEntreNbrClasses{
-	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 60px;
+	font-size: 2em;
+}
+
+#conteneurEntreNbrClasses label{
+	width: 230px;
 }
 
 #nbrClass{
 	width: 50px;
 	height: 30px;
 	font-size: 1em;
+}
+
+#conteneurTotal{
+	position: relative;
+	margin:0px auto;
+	width: 80%;
+}
+
+#conteneurTotal h2{
+	font-size: 2em;
+	margin-bottom: 10px;
+	visibility: hidden;
 }
 
 #conteneurTabEnTete{
