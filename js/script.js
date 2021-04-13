@@ -302,14 +302,11 @@ function action(){
 	inputTabEnTete.forEach(inputTete => inputTete.addEventListener("input", () =>{
 		let comptPosition = 0
 		let numeroEnTete = parseInt(inputTete.id.substring(5,70)) + 1
-		console.log(numeroEnTete);
 		tabEnTete.forEach(tabTete => {
-			console.log(tabTete.value);
 			if ((comptPosition === numeroEnTete) || (comptPosition === parseInt(nbrClass.value) + numeroEnTete)) {
 				tabTete.innerHTML = inputTete.value
 			}
 			comptPosition +=1;
-			console.log(comptPosition);
 		})
 	}))
 
