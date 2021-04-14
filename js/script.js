@@ -267,8 +267,6 @@ function termine(){
 function action(){
 	conteneurAllWithoutCritere[0].style.visibility = 'visible'
 	conteneurAllWithoutCritere[1].style.visibility = 'visible'
-	// document.getElementById('conteneurTotal').style.visibility = 'visible';
-	// titre.forEach(entree => entree.style.visibility = 'visible')
 	document.getElementById('alerteNbrCritere').style.visibility = 'hidden';
 	let tableString = "<table id='tabMulti'>";
 	// ICI, RAJOUTER UN "th" VIDE POUR CREER SIMPLEMENT LES ENTETE VERTICAUX ET HORIZONTAUX
@@ -339,10 +337,19 @@ function action(){
 		let comptPosition = 0
 		let numeroEnTete = parseInt(inputTete.id.substring(5,70)) + 1
 		tabEnTete.forEach(tabTete => {
+			// S'IL Y A CORRESPONDANCE ENTRE L'IDENTIFIANT COUPE DE L'INPUT D'EN TETE ET LA VARIABLE INCREMENTEE
 			if ((comptPosition === numeroEnTete) || (comptPosition === parseInt(nbrClass.value) + numeroEnTete)) {
-				tabTete.innerHTML = inputTete.value
+				// SI L'INPUT D'EN TETE EST VIDE, JE REPLACE LA VALEUR PAR DEFAUT
+				if (inputTete.value.length === 0) {
+					tabTete.innerHTML = `Critère ${((numeroEnTete - 1) < 9) ? ('0' + (numeroEnTete)) : numeroEnTete}`
+				}
+				// SINON, JE PLACE CE QUE ECRIS L'UTILISATEUR
+				else{
+					tabTete.innerHTML = inputTete.value
+				}
 			}
-			comptPosition +=1;
+			// J'INCREMENTE LA VARIABLE POUR POUVOIR PARCOURIR L'ENSEMBLE DES ENTETES
+			comptPosition += 1
 		})
 	}))
 
