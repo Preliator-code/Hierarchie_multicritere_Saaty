@@ -14,6 +14,8 @@ let conteneurTablePoids = document.getElementById('conteneurTablePoids').innerHT
 let titre = Array.prototype.slice.call(document.getElementsByTagName('h2'))
 titre.pop()
 
+let inputTabMulti;
+
 // FONCTION QUI PERMET D'ENLEVER UNE VALEUR SPECIFIQUE A UN TABLEAU
 Array.prototype.remove = function() {
 	var what, a = arguments, L = a.length, ax;
@@ -25,31 +27,6 @@ Array.prototype.remove = function() {
 	}
 	return this;
 };
-
-function readOnlyCell(inputTabMulti){
-	let compt = 0;
-	let emplac = 0;
-	inputTabMulti.forEach(entree => {
-		emplac +=1
-		// CHAQUE FOIS QU'ON REVIENT A LA LIGNE, ON INCREMENTE compt
-		if (emplac % nbrClass.value === 0) {
-			emplac = 0;
-			compt += 1
-		}
-		// DES CONDITIONS QUI NE PEUVENT ETRE COMPRISES QU'EN AFFICHANT LES VALEURS DE emplac ET compt
-		if (emplac > compt || emplac === 0) {
-			entree.style.backgroundColor = "lightgrey";
-			entree.disabled = true;
-		}
-		if (emplac === (compt + 1) || compt == nbrClass.value) {
-			entree.style.backgroundColor = "grey";
-			entree.style.color = "white";
-			entree.selectedIndex = 9;
-			// SI L'ELEMENT N'A PAS DE CLASSE, JE LUI MET inputCell, SINON 'inputCell someClass'
-			entree.className += entree.className ? ' someClass' : 'inputCell';
-		} 
-	})
-}
 
 function sumArray(array) {
   for (
@@ -107,32 +84,6 @@ function getColumnValues(inputTabMulti){
 		}
 	})
 	calculIndices(convertToDoubleDimension(tabColumn, tabValue), inputTabMulti)
-}
-
-// OBJECTIF : DONNER AUX INPUT UN IDENTIFIANT QUI PERMETTE DE RECUPERER L'INPUT INVERSE.
-function reordonneArray(inputTabMulti){
-	let comptReadOnly = 1
-	let comptRead = 1
-	// TOUT D'ABORD, JE REORDONNE LES INPUT EN MODIFIABLE. LORSQU'ON EST SUR UNE MEME COLONNE, J'INCREMENTE. 
-	for (var i = 0; i < nbrClass.value; i++) {
-		inputTabMulti.forEach(entree => {
-			// SI L'ELEMENT EST MODIFIABLE, NE POSSEDE PAS LA CLASSE someClass (NE FAIT PAS PARTI DES "1"), ET ON EST UNE SUR MEME COLONNE
-			if ((parseInt(entree.id.split('_')[1]) === i) && !entree.disabled && !entree.classList.contains('someClass')){
-				entree.id += '_read_' + comptRead
-				// entree.value = comptRead
-				comptRead += 1
-			}
-		})
-	}
-	// POUR UNE RAISON MATHEMATIQUE INCOMPREHENSIBLE, JE NE DOIS PAS FAIRE LA MEME CHOSE POUR L'AUTRE MOITIE. CELLE CI DOIT ETRE INCREMENTEE PAR LIGNE. JE SORS DONC DE LA BOUCLE for
-	inputTabMulti.forEach(entree => {
-		// SI L'ELEMENT EST EN readOnly ET NE POSSEDE PAS LA CLASSE someClass (NE FAIT PAS PARTI DES "1")
-		if (entree.disabled && !entree.classList.contains('someClass')) {
-			entree.id += '_readOnly_' + comptReadOnly
-			// entree.value = comptReadOnly
-			comptReadOnly+= 1
-		}
-	})
 }
 
 function calculIndices(tabColumnFinal, inputTabMulti){
@@ -221,55 +172,6 @@ function calculIndices(tabColumnFinal, inputTabMulti){
 	fillTabWeight(tabMean)
 }
 
-// function makeTabWeight(tabPoids){
-// 	let tableString = "<table id='tabPoids'>";
-// 	let tableHead = "<thead><tr><th>Nom critère</th><th>Poids</th></thead>"
-// 	let ligne = ""
-// 	let inputEnTete = "";
-
-// 	let comptCell = 0
-
-// 	for (var i = 0; i < nbrClass.value; i++) {
-// 		ligne += `<tr><td class='enTete'>Critère ${(i<9) ? ('0' + (i + 1)) : (i + 1)}</td><td class='aRemplir'>${tabPoids[i].toFixed(2)}</td></tr>`
-// 	}
-// 	tableString += tableHead
-// 	tableString += ligne
-// 	tableString += "</table>";
-
-// 	console.log(tableString);
-
-// 	// J'AJOUTE AU CONTENU DE LA DIV conteneurTablePoids EXISTANT LE TABLEAU
-// 	document.getElementById('conteneurTablePoids').innerHTML = conteneurTablePoids + tableString;
-// }
-
-function prepareTabWeight(tabPoids){
-	let tableString = "<table id='tabPoids'>";
-	let tableHead = "<thead><tr><th>Nom critère</th><th>Poids</th></thead>"
-	let ligne = ""
-	let inputEnTete = "";
-
-	let comptCell = 0
-
-	for (var i = 0; i < nbrClass.value; i++) {
-		ligne += `<tr><th class='enTete'>Critère ${(i<9) ? ('0' + (i + 1)) : (i + 1)}</th><td class='aRemplir'>-</td></tr>`
-	}
-	tableString += tableHead
-	tableString += ligne
-	tableString += "</table>";
-
-	// J'AJOUTE AU CONTENU DE LA DIV conteneurTablePoids EXISTANT LE TABLEAU
-	document.getElementById('conteneurTablePoids').innerHTML = conteneurTablePoids + tableString;
-}
-
-function fillTabWeight(tab){
-	let aRemplir = document.querySelectorAll('#tabPoids .aRemplir')
-	let compt = 0
-	aRemplir.forEach(entree => {
-		entree.innerHTML = tab[compt].toFixed(2)
-		compt += 1
-	})
-}
-
 function entreNbrClasses(nbrClasses){
 	let nbrClass = nbrClasses;
 	(parseInt(nbrClass.value) < 3 || nbrClass.value.length === 0) ? termine() : action();
@@ -282,167 +184,18 @@ function termine(){
 }
 
 function action(){
+	// J'AFFICHE LA DIV D'ENTREE DU NOM DES ENTETES, ET CELLE QUI CONTIENT LA MATRICE.
 	conteneurAllWithoutCritere[0].style.visibility = 'visible'
 	conteneurAllWithoutCritere[1].style.visibility = 'visible'
 	document.getElementById('alerteNbrCritere').style.visibility = 'hidden';
-	let tableString = "<table id='tabMulti'>";
-	// ICI, RAJOUTER UN "th" VIDE POUR CREER SIMPLEMENT LES ENTETE VERTICAUX ET HORIZONTAUX
-	let tableHead = "<thead><tr><th></th>"
-	let ligneTableHead = ""
-	let ligne = ""
-	let inputEnTete = "";
 
+	// JE CREE LA MATRICE ET PREPARE LE TABLEAU DE POIDS, POUR POUVOIR MODIFIER EN TEMPS REEL LE NOM DES CRITERES EN MEME TEMPS QUE CEUX DE LA MATRICE
+	prepareTabMulti();
 	prepareTabWeight();
 
-	let comptCell = 0
+	// JE DONNE LA POSSIBILITE D'ENTRER LE NOM DE CHAQUE CRITERE AVEC UN EVENEMENT DE TYPE "input"
+	setHeader(document.querySelectorAll(".entreeEnTete"), document.querySelectorAll("#tabMulti th"), document.querySelectorAll("#tabPoids .enTete"))
 
-	for (var i = 0; i < nbrClass.value; i++) {
-		let comptCol = 1
-		inputEnTete += `<div class="conteneurInput"><label for="nbrClass">Nom critère ${(i<9) ? ('0' + (i + 1)) : (i + 1)}</label><input type="text" name="nbrClass" class="entreeEnTete" id="input${i}"></div>`
-		ligneTableHead += `<th><div class='enTete'>Critère ${(i<9) ? ('0' + (i + 1)) : (i + 1)}</div></th>`
-		ligne += `<tr><th><div class='enTete'>Critère ${(i<9) ? ('0' + (i + 1)) : (i + 1)}</div></th>`
-		for (var j = 0; j < nbrClass.value; j++) {
-			// ligne += `<td><input type="number" id="col_${comptCol}" class="inputCell" value='${comptCell}'></td>`
-			// ICI, ON AJOUTE DES INFORMATIONS A CHAQUE INPUT SEPARE PAR DES "_" : NUMERO DE LA COLONNE, NUMERO GENERAL DE L'INPUT, S'IL EST MODIFIABLE OU PAS, ET SON NUMERO D'INPUT RELATIF A SA COLONNE
-			// ligne += `<td><input id="col_${comptCol}_idGeneral_${comptCell}" class="inputCell" for="liste"></td>`
-			ligne += 	`<td><select id="col_${comptCol}_idGeneral_${comptCell}" class="inputCell" name="" id="liste">
-							<option value="Pas_un_nombre"></option>
-							<optgroup label="Normal">
-								<option value="1">9</option>
-								<option value="2">8</option>
-								<option value="3">7</option>
-								<option value="4">6</option>
-								<option value="5">5</option>
-								<option value="6">4</option>
-								<option value="7">3</option>
-								<option value="8">2</option>
-								<option value="9">1</option>
-							</optgroup>
-							<optgroup label="Inverse">
-								<option value="10">1/9</option>
-								<option value="11">1/8</option>
-								<option value="12">1/7</option>
-								<option value="13">1/6</option>
-								<option value="14">1/5</option>
-								<option value="15">1/4</option>
-								<option value="16">1/3</option>
-								<option value="17">1/2</option>
-							</optgroup>
-						</select></td>`
-			comptCol+=1
-			comptCell+=1
-		}
-		ligne += "</tr>"
-	}
-	ligneTableHead += '</thead>'
-	tableHead += ligneTableHead
-	tableHead += "</tr>"
-	tableString += tableHead
-	tableString += ligne
-	tableString += "</table>";
-	tableString += "<p id='alerteChamps' class='avertissement'>*Veuillez remplir tous les champs pour continuer</p>";
-
-	conteneurEnTete.innerHTML = inputEnTete;
-	conteneurMulti.innerHTML = tableString;
-
-	let inputTabMulti = document.querySelectorAll('#tabMulti td select');
-
-	readOnlyCell(inputTabMulti)
-	reordonneArray(inputTabMulti)
-
-	let inputTabEnTete = document.querySelectorAll(".entreeEnTete")
-	let tabEnTeteMulti = document.querySelectorAll("#tabMulti th")
-	let tabEnTetePoids = document.querySelectorAll("#tabPoids .enTete")
-	inputTabEnTete.forEach(inputTete => inputTete.addEventListener("input", () =>{
-		let comptPositionMulti = 0
-		let comptPositionPoids = 1
-		let numeroEnTete = parseInt(inputTete.id.substring(5,70)) + 1
-		tabEnTeteMulti.forEach(tabTete => {
-			// S'IL Y A CORRESPONDANCE ENTRE L'IDENTIFIANT COUPE DE L'INPUT D'EN TETE ET LA VARIABLE INCREMENTEE
-			if ((comptPositionMulti === numeroEnTete) || (comptPositionMulti === parseInt(nbrClass.value) + numeroEnTete)) {
-				// SI L'INPUT D'EN TETE EST VIDE, JE REPLACE LA VALEUR PAR DEFAUT
-				if (inputTete.value.length === 0) {
-					tabTete.innerHTML = `Critère ${((numeroEnTete - 1) < 9) ? ('0' + (numeroEnTete)) : numeroEnTete}`
-				}
-				// SINON, JE PLACE CE QUE ECRIS L'UTILISATEUR
-				else{
-					tabTete.innerHTML = inputTete.value
-				}
-			}
-			// J'INCREMENTE LA VARIABLE POUR POUVOIR PARCOURIR L'ENSEMBLE DES ENTETES
-			comptPositionMulti += 1
-		})
-		tabEnTetePoids.forEach(tabTete => {
-			// S'IL Y A CORRESPONDANCE ENTRE L'IDENTIFIANT COUPE DE L'INPUT D'EN TETE ET LA VARIABLE INCREMENTEE
-			if ((comptPositionPoids === numeroEnTete) || (comptPositionPoids === parseInt(nbrClass.value) + numeroEnTete)) {
-				// SI L'INPUT D'EN TETE EST VIDE, JE REPLACE LA VALEUR PAR DEFAUT
-				if (inputTete.value.length === 0) {
-					tabTete.innerHTML = `Critère ${((numeroEnTete - 1) < 9) ? ('0' + (numeroEnTete)) : numeroEnTete}`
-				}
-				// SINON, JE PLACE CE QUE ECRIS L'UTILISATEUR
-				else{
-					tabTete.innerHTML = inputTete.value
-				}
-			}
-			// J'INCREMENTE LA VARIABLE POUR POUVOIR PARCOURIR L'ENSEMBLE DES ENTETES
-			comptPositionPoids += 1
-		})
-	}))
-
-	let comptEntree = 0;
-	let tabId = []
-
-	let elementReadOnly = document.querySelectorAll("select[disabled]")
-
-	inputTabMulti.forEach(entree => entree.addEventListener("change", () =>{
-		let id_input = parseInt(entree.id.split('_')[5])
-		// console.log("id_input : " + id_input);
-		let nbCol = parseInt(entree.id.split('_')[1])
-
-		// SI L'INPUT N'EST PAS VIDE, N'EST PAS PRESENTE DANS LE TABLEAU DES IDENTIFIANTS, ET EST UN NOMBRE
-		if ((entree.value !== '') && (tabId.indexOf(id_input) === -1) && !isNaN(entree.value)) {
-			comptEntree +=1
-			tabId.push(id_input)
-		}
-
-		// SI J'ENLEVE UN ELEMENT : L'INPUT NE DOIT PAS ETRE UN NOMBRE, ET DOIT ETRE DEJA PRESENT DANS tabId. CE PARAMETRE PERMET D'EVITER DE CUMULER LES DECREMENTATION DE comptEntree
-		else if (isNaN(entree.value) && (tabId.indexOf(id_input) !== -1)) {
-			// JE RETIRE 1 A comptEntree
-			comptEntree -=1
-			// JE RETIRE L'IDENTFIANT DE L'INPUT CIBLE DU TABLEAU AVEC UNE FONCTION QUE J'AI ECRITE EN HAUT
-			tabId.remove(id_input);
-		}
-
-		// POUR UNE RAISON INDETERMINEE, JE N'ARRIVE PAS A FAIRE UN FOREACH SUR elementReadOnly. J'AI L'ERRREUR "forEach N'EST PAS UNE FONCTION"
-		// JE PARCOURS CHAQUE ELEMENT DE elementReadOnly. S'IL Y A UNE CORRESPONDANCE ENTRE L'IDENTIFIANT DE L'ENTREE ET DU TABLEAU, JE MARQUE LA MEME VALEUR
-		for (var i = 0; i < elementReadOnly.length; i++) {
-			if (parseInt(elementReadOnly[i].id.split('_')[5]) === id_input) {
-				// elementReadOnly[i].value = (1 / entree.value).toFixed(2)
-				elementReadOnly[i].selectedIndex = convertValueToInverse(parseInt(entree.value))
-			}
-		}
-
-		// SI TOUS LES INPUT EDITABLES NE SONT ENTRES....
-		if (comptEntree < ((nbrClass.value * nbrClass.value - nbrClass.value) / 2)) {
-			conteneurAllWithoutCritere[2].style.visibility = 'hidden'
-			conteneurAllWithoutCritere[3].style.visibility = 'hidden'
-			document.getElementById("alerteChamps").style.display = 'block'
-			document.getElementById("alerteCr").style.display = 'none'
-			// document.getElementById("conteneurInfos").style.visibility = 'hidden'
-			// document.getElementById("alerteCr").style.visibility = 'hidden'
-			// document.getElementsByClassName("titre")[2].style.visibility = 'hidden'
-		}
-
-		// SI TOUS LES INPUT EDITABLES SONT ENTRES...
-		if (comptEntree === ((nbrClass.value * nbrClass.value - nbrClass.value) / 2)) {
-			getColumnValues(inputTabMulti)
-			document.getElementById("alerteChamps").style.display = 'none'
-			document.getElementById("alerteCr").style.display = 'block'
-			conteneurAllWithoutCritere[2].style.visibility = 'visible'
-			conteneurAllWithoutCritere[3].style.visibility = 'visible'
-			// document.getElementById("conteneurInfos").style.visibility = 'visible'
-			// document.getElementsByClassName("titre")[2].style.visibility = 'visible'
-		}
-	}))
+	controlMain()
 }
 
