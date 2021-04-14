@@ -218,10 +218,31 @@ function calculIndices(tabColumnFinal, inputTabMulti){
 		document.getElementById("cr").style.backgroundColor = '#BC0000'
 		document.getElementById("alerteCr").style.visibility = 'visible'
 	}
-	makeTabWeight(tabMean)
+	// makeTabWeight(tabMean)
 }
 
-function makeTabWeight(tabPoids){
+// function makeTabWeight(tabPoids){
+// 	let tableString = "<table id='tabPoids'>";
+// 	let tableHead = "<thead><tr><th>Nom critère</th><th>Poids</th></thead>"
+// 	let ligne = ""
+// 	let inputEnTete = "";
+
+// 	let comptCell = 0
+
+// 	for (var i = 0; i < nbrClass.value; i++) {
+// 		ligne += `<tr><td class='enTete'>Critère ${(i<9) ? ('0' + (i + 1)) : (i + 1)}</td><td class='aRemplir'>${tabPoids[i].toFixed(2)}</td></tr>`
+// 	}
+// 	tableString += tableHead
+// 	tableString += ligne
+// 	tableString += "</table>";
+
+// 	console.log(tableString);
+
+// 	// J'AJOUTE AU CONTENU DE LA DIV conteneurTablePoids EXISTANT LE TABLEAU
+// 	document.getElementById('conteneurTablePoids').innerHTML = conteneurTablePoids + tableString;
+// }
+
+function prepareTabWeight(tabPoids){
 	let tableString = "<table id='tabPoids'>";
 	let tableHead = "<thead><tr><th>Nom critère</th><th>Poids</th></thead>"
 	let ligne = ""
@@ -230,22 +251,15 @@ function makeTabWeight(tabPoids){
 	let comptCell = 0
 
 	for (var i = 0; i < nbrClass.value; i++) {
-		ligne += `<tr><td class='enTete'>Critère ${(i<9) ? ('0' + (i + 1)) : (i + 1)}</td><td>${tabPoids[i].toFixed(2)}</td></tr>`
+		ligne += `<tr><th class='enTete'>Critère ${(i<9) ? ('0' + (i + 1)) : (i + 1)}</th><td class='aRemplir'>-</td></tr>`
 	}
 	tableString += tableHead
 	tableString += ligne
 	tableString += "</table>";
 
-	console.log(tableString);
-
 	// J'AJOUTE AU CONTENU DE LA DIV conteneurTablePoids EXISTANT LE TABLEAU
 	document.getElementById('conteneurTablePoids').innerHTML = conteneurTablePoids + tableString;
 }
-
-
-
-
-
 
 function entreNbrClasses(nbrClasses){
 	let nbrClass = nbrClasses;
@@ -256,12 +270,6 @@ function termine(){
 	(parseInt(nbrClass.value) < 3) ? document.getElementById('alerteNbrCritere').style.visibility = 'visible' : "";
 	conteneurAllWithoutCritere.forEach(entree => entree.style.visibility = 'hidden')
 	document.getElementById("alerteCr").style.display = 'none'
-	// titre.forEach(entree => entree.style.visibility = 'hidden')
-	// document.getElementById('conteneurTotal').style.visibility = 'hidden';
-	// document.getElementById("conteneurInfos").style.visibility = 'hidden'
-	// document.getElementById("alerteCr").style.visibility = 'hidden'
-	// document.getElementById("alerteChamps").style.display = 'none'
-	// document.getElementsByClassName("titre")[2].style.visibility = 'hidden'
 }
 
 function action(){
@@ -274,6 +282,8 @@ function action(){
 	let ligneTableHead = ""
 	let ligne = ""
 	let inputEnTete = "";
+
+	prepareTabWeight();
 
 	let comptCell = 0
 
@@ -332,13 +342,17 @@ function action(){
 	reordonneArray(inputTabMulti)
 
 	let inputTabEnTete = document.querySelectorAll(".entreeEnTete")
-	let tabEnTete = document.querySelectorAll("th")
+	let tabEnTeteMulti = document.querySelectorAll("#tabMulti th")
+	let tabEnTetePoids = document.querySelectorAll("#tabPoids .enTete")
+	console.log(tabEnTeteMulti);
+	console.log(tabEnTetePoids);
 	inputTabEnTete.forEach(inputTete => inputTete.addEventListener("input", () =>{
-		let comptPosition = 0
+		let comptPositionMulti = 0
+		let comptPositionPoids = 1
 		let numeroEnTete = parseInt(inputTete.id.substring(5,70)) + 1
-		tabEnTete.forEach(tabTete => {
+		tabEnTeteMulti.forEach(tabTete => {
 			// S'IL Y A CORRESPONDANCE ENTRE L'IDENTIFIANT COUPE DE L'INPUT D'EN TETE ET LA VARIABLE INCREMENTEE
-			if ((comptPosition === numeroEnTete) || (comptPosition === parseInt(nbrClass.value) + numeroEnTete)) {
+			if ((comptPositionMulti === numeroEnTete) || (comptPositionMulti === parseInt(nbrClass.value) + numeroEnTete)) {
 				// SI L'INPUT D'EN TETE EST VIDE, JE REPLACE LA VALEUR PAR DEFAUT
 				if (inputTete.value.length === 0) {
 					tabTete.innerHTML = `Critère ${((numeroEnTete - 1) < 9) ? ('0' + (numeroEnTete)) : numeroEnTete}`
@@ -349,7 +363,22 @@ function action(){
 				}
 			}
 			// J'INCREMENTE LA VARIABLE POUR POUVOIR PARCOURIR L'ENSEMBLE DES ENTETES
-			comptPosition += 1
+			comptPositionMulti += 1
+		})
+		tabEnTetePoids.forEach(tabTete => {
+			// S'IL Y A CORRESPONDANCE ENTRE L'IDENTIFIANT COUPE DE L'INPUT D'EN TETE ET LA VARIABLE INCREMENTEE
+			if ((comptPositionPoids === numeroEnTete) || (comptPositionPoids === parseInt(nbrClass.value) + numeroEnTete)) {
+				// SI L'INPUT D'EN TETE EST VIDE, JE REPLACE LA VALEUR PAR DEFAUT
+				if (inputTete.value.length === 0) {
+					tabTete.innerHTML = `Critère ${((numeroEnTete - 1) < 9) ? ('0' + (numeroEnTete)) : numeroEnTete}`
+				}
+				// SINON, JE PLACE CE QUE ECRIS L'UTILISATEUR
+				else{
+					tabTete.innerHTML = inputTete.value
+				}
+			}
+			// J'INCREMENTE LA VARIABLE POUR POUVOIR PARCOURIR L'ENSEMBLE DES ENTETES
+			comptPositionPoids += 1
 		})
 	}))
 
