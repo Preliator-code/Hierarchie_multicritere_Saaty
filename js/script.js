@@ -218,7 +218,7 @@ function calculIndices(tabColumnFinal, inputTabMulti){
 		document.getElementById("cr").style.backgroundColor = '#BC0000'
 		document.getElementById("alerteCr").style.visibility = 'visible'
 	}
-	// makeTabWeight(tabMean)
+	fillTabWeight(tabMean)
 }
 
 // function makeTabWeight(tabPoids){
@@ -259,6 +259,15 @@ function prepareTabWeight(tabPoids){
 
 	// J'AJOUTE AU CONTENU DE LA DIV conteneurTablePoids EXISTANT LE TABLEAU
 	document.getElementById('conteneurTablePoids').innerHTML = conteneurTablePoids + tableString;
+}
+
+function fillTabWeight(tab){
+	let aRemplir = document.querySelectorAll('#tabPoids .aRemplir')
+	let compt = 0
+	aRemplir.forEach(entree => {
+		entree.innerHTML = tab[compt].toFixed(2)
+		compt += 1
+	})
 }
 
 function entreNbrClasses(nbrClasses){
@@ -344,8 +353,6 @@ function action(){
 	let inputTabEnTete = document.querySelectorAll(".entreeEnTete")
 	let tabEnTeteMulti = document.querySelectorAll("#tabMulti th")
 	let tabEnTetePoids = document.querySelectorAll("#tabPoids .enTete")
-	console.log(tabEnTeteMulti);
-	console.log(tabEnTetePoids);
 	inputTabEnTete.forEach(inputTete => inputTete.addEventListener("input", () =>{
 		let comptPositionMulti = 0
 		let comptPositionPoids = 1
