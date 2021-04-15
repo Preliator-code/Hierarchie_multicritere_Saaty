@@ -7,19 +7,7 @@ function controlMain(){
 		let id_input = parseInt(entree.id.split('_')[5])
 		let nbCol = parseInt(entree.id.split('_')[1])
 
-		// SI L'INPUT N'EST PAS VIDE, N'EST PAS PRESENTE DANS LE TABLEAU DES IDENTIFIANTS, ET EST UN NOMBRE
-		if ((entree.value !== '') && (tabId.indexOf(id_input) === -1) && !isNaN(entree.value)) {
-			comptEntree +=1
-			tabId.push(id_input)
-		}
-
-		// SI J'ENLEVE UN ELEMENT : L'INPUT NE DOIT PAS ETRE UN NOMBRE, ET DOIT ETRE DEJA PRESENT DANS tabId. CE PARAMETRE PERMET D'EVITER DE CUMULER LES DECREMENTATION DE comptEntree
-		else if (isNaN(entree.value) && (tabId.indexOf(id_input) !== -1)) {
-			// JE RETIRE 1 A comptEntree
-			comptEntree -=1
-			// JE RETIRE L'IDENTFIANT DE L'INPUT CIBLE DU TABLEAU AVEC UNE FONCTION QUE J'AI ECRITE EN HAUT
-			tabId.remove(id_input);
-		}
+		comptEntree = controlInput(entree, id_input, tabId, comptEntree)
 
 		// JE PARCOURS CHAQUE ELEMENT DE elementReadOnly. S'IL Y A UNE CORRESPONDANCE ENTRE L'IDENTIFIANT DE L'ENTREE ET DU TABLEAU, JE MARQUE LA MEME VALEUR
 		for (var i = 0; i < elementReadOnly.length; i++) {
@@ -34,21 +22,22 @@ function controlMain(){
 	}))
 }
 
-// function controlInput(inputEntree, idInputEntree, tabIdInputEntree, comptEntree){
-// 	// SI L'INPUT N'EST PAS VIDE, N'EST PAS PRESENTE DANS LE TABLEAU DES IDENTIFIANTS, ET EST UN NOMBRE
-// 	if ((inputEntree.value !== '') && (tabIdInputEntree.indexOf(idInputEntree) === -1) && !isNaN(inputEntree.value)) {
-// 		comptEntree +=1
-// 		tabIdInputEntree.push(idInputEntree)
-// 	}
+function controlInput(inputEntree, idInputEntree, tabIdInputEntree, comptEntree){
+	// SI L'INPUT N'EST PAS VIDE, N'EST PAS PRESENTE DANS LE TABLEAU DES IDENTIFIANTS, ET EST UN NOMBRE
+	if ((inputEntree.value !== '') && (tabIdInputEntree.indexOf(idInputEntree) === -1) && !isNaN(inputEntree.value)) {
+		comptEntree +=1
+		tabIdInputEntree.push(idInputEntree)
+	}
 
-// 	// SI J'ENLEVE UN ELEMENT : L'INPUT NE DOIT PAS ETRE UN NOMBRE, ET DOIT ETRE DEJA PRESENT DANS tabId. CE PARAMETRE PERMET D'EVITER DE CUMULER LES DECREMENTATION DE comptEntree
-// 	else if (isNaN(inputEntree.value) && (tabIdInputEntree.indexOf(idInputEntree) !== -1)) {
-// 		// JE RETIRE 1 A comptEntree
-// 		comptEntree -=1
-// 		// JE RETIRE L'IDENTFIANT DE L'INPUT CIBLE DU TABLEAU AVEC UNE FONCTION QUE J'AI ECRITE EN HAUT
-// 		tabIdInputEntree.remove(idInputEntree);
-// 	}
-// }
+	// SI J'ENLEVE UN ELEMENT : L'INPUT NE DOIT PAS ETRE UN NOMBRE, ET DOIT ETRE DEJA PRESENT DANS tabId. CE PARAMETRE PERMET D'EVITER DE CUMULER LES DECREMENTATION DE comptEntree
+	else if (isNaN(inputEntree.value) && (tabIdInputEntree.indexOf(idInputEntree) !== -1)) {
+		// JE RETIRE 1 A comptEntree
+		comptEntree -=1
+		// JE RETIRE L'IDENTFIANT DE L'INPUT CIBLE DU TABLEAU AVEC UNE FONCTION QUE J'AI ECRITE EN HAUT
+		tabIdInputEntree.remove(idInputEntree);
+	}
+	return comptEntree
+}
 
 function someInputNotFill(){
 	conteneurAllWithoutCritere[2].style.visibility = 'hidden'
