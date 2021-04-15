@@ -1,12 +1,11 @@
-let tableString = "<table id='tabMulti'>";
-// ICI, RAJOUTER UN "th" VIDE POUR CREER SIMPLEMENT LES ENTETE VERTICAUX ET HORIZONTAUX
-let tableHead = "<thead><tr><th></th>"
-let ligneTableHead = ""
-let ligne = ""
-let inputEnTete = "";
-
 function prepareTabMulti(){
 	let comptCell = 0
+	let tableString = "<table id='tabMulti'>";
+	// ICI, RAJOUTER UN "th" VIDE POUR CREER SIMPLEMENT LES ENTETE VERTICAUX ET HORIZONTAUX
+	let tableHead = "<thead><tr><th></th>"
+	let ligneTableHead = ""
+	let ligne = ""
+	let inputEnTete = "";
 
 	for (var i = 0; i < nbrClass.value; i++) {
 		let comptCol = 1
@@ -14,9 +13,7 @@ function prepareTabMulti(){
 		ligneTableHead += `<th><div class='enTete'>Critère ${(i<9) ? ('0' + (i + 1)) : (i + 1)}</div></th>`
 		ligne += `<tr><th><div class='enTete'>Critère ${(i<9) ? ('0' + (i + 1)) : (i + 1)}</div></th>`
 		for (var j = 0; j < nbrClass.value; j++) {
-			// ligne += `<td><input type="number" id="col_${comptCol}" class="inputCell" value='${comptCell}'></td>`
 			// ICI, ON AJOUTE DES INFORMATIONS A CHAQUE INPUT SEPARE PAR DES "_" : NUMERO DE LA COLONNE, NUMERO GENERAL DE L'INPUT, S'IL EST MODIFIABLE OU PAS, ET SON NUMERO D'INPUT RELATIF A SA COLONNE
-			// ligne += `<td><input id="col_${comptCol}_idGeneral_${comptCell}" class="inputCell" for="liste"></td>`
 			ligne += 	`<td><select id="col_${comptCol}_idGeneral_${comptCell}" class="inputCell" name="" id="liste">
 							<option value="Pas_un_nombre"></option>
 							<optgroup label="Normal">
@@ -80,7 +77,7 @@ function prepareTabWeight(tabPoids){
 	tableString += ligne
 	tableString += "</table>";
 
-	// J'AJOUTE AU CONTENU DE LA DIV conteneurTablePoids EXISTANT LE TABLEAU
+	// J'AJOUTE LE TABLEAU AU CONTENU DEJA EXISTANT DE LA DIV conteneurTablePoids 
 	document.getElementById('conteneurTablePoids').innerHTML = conteneurTablePoids + tableString;
 }
 

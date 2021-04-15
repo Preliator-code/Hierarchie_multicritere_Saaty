@@ -1,3 +1,53 @@
+// FONCTION QUI PERMET D'ENLEVER UNE VALEUR SPECIFIQUE A UN TABLEAU
+Array.prototype.remove = function() {
+	var what, a = arguments, L = a.length, ax;
+	while (L && this.length) {
+		what = a[--L];
+		while ((ax = this.indexOf(what)) !== -1) {
+			this.splice(ax, 1);
+		}
+	}
+	return this;
+};
+
+
+function sumArray(array) {
+  for (
+    var
+      index = 0,              // The iterator
+      length = array.length,  // Cache the array length
+      sum = 0;                // The total amount
+      index < length;         // The "for"-loop condition
+      sum += array[index++]   // Add number on each iteration
+  );
+  return sum;
+}
+
+
+function removeEmptyValues(tab){
+	for (var i = 0; i < (tab.length); i++) {
+		tab[i] = tab[i].filter(n => n)
+	}
+	return tab
+}
+
+
+function convertToDoubleDimension(tabNumColumn, tabValueColumn){
+	// JE CREE UN TABLEAU QUI DEVIENDRA UNE DOUBLE DIMENSION QUI CONTIENDRA LES VALEURS DE CHAQUE COLONNE
+	let tabColumnValue = new Array()
+	for (var i = 0; i < (nbrClass.value); i++) {
+		tabColumnValue[i] = new Array()
+		for (var j = 0; j < (tabNumColumn.length); j++) {
+			if (tabNumColumn[j] === i) {
+				tabColumnValue[i][j] = tabValueColumn[j]
+			}
+		}
+	}
+	// console.log(removeEmptyValues(tabColumnValue));
+	return removeEmptyValues(tabColumnValue)
+}
+
+
 function convertValueToInverse(entree){
 	switch (entree) {
 		case 1:
@@ -53,6 +103,7 @@ function convertValueToInverse(entree){
 			break;
 	}
 }
+
 
 function convertValueToReal(entree){
 	switch (entree) {
