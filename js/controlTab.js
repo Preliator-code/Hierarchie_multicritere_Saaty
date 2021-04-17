@@ -33,7 +33,7 @@ function controlInput(inputEntree, idInputEntree, tabIdInputEntree, comptEntree)
 	else if (isNaN(inputEntree.value) && (tabIdInputEntree.indexOf(idInputEntree) !== -1)) {
 		// JE RETIRE 1 A comptEntree
 		comptEntree -=1
-		// JE RETIRE L'IDENTFIANT DE L'INPUT CIBLE DU TABLEAU AVEC UNE FONCTION QUE J'AI ECRITE EN HAUT
+		// JE RETIRE L'IDENTIFIANT DE L'INPUT CIBLE DU TABLEAU AVEC UNE FONCTION QUE J'AI ECRITE EN HAUT
 		tabIdInputEntree.remove(idInputEntree);
 	}
 	return comptEntree

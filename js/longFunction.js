@@ -10,7 +10,7 @@ Array.prototype.remove = function() {
 	return this;
 };
 
-
+// FONCTION POUR FAIRE LA SOMME D'UN TABLEAU
 function sumArray(array) {
   for (
     var
@@ -23,7 +23,7 @@ function sumArray(array) {
   return sum;
 }
 
-
+// FONCTION POUR ENLEVER LES VALEURS VIDES D'UN TABLEAU
 function removeEmptyValues(tab){
 	for (var i = 0; i < (tab.length); i++) {
 		tab[i] = tab[i].filter(n => n)
@@ -31,7 +31,7 @@ function removeEmptyValues(tab){
 	return tab
 }
 
-
+// FONCTION POUR CONVERTIR 2 TABLEAUX EN 1 TABLEAU A DOUBLE DIMENSIONS
 function convertToDoubleDimension(tabNumColumn, tabValueColumn){
 	// JE CREE UN TABLEAU QUI DEVIENDRA UNE DOUBLE DIMENSION QUI CONTIENDRA LES VALEURS DE CHAQUE COLONNE
 	let tabColumnValue = new Array()
@@ -43,7 +43,6 @@ function convertToDoubleDimension(tabNumColumn, tabValueColumn){
 			}
 		}
 	}
-	// console.log(removeEmptyValues(tabColumnValue));
 	return removeEmptyValues(tabColumnValue)
 }
 

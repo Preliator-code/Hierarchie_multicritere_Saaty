@@ -19,13 +19,13 @@ function calculIndices(tabColumnFinal, inputTabMulti){
 	// POUR LA SUITE, JE PREPARE UNE LIGNE POUR CALCULER LA MOYENNE D'UN TABLEAU
 	let average = arr => arr.reduce( ( p, c ) => p + c, 0 ) / arr.length;
 
-	// --CALCUL DE "PRIORITE" : JE VAIS AVOIR BESOIN DE RECUPERER LA PREMIERE VALEUR DE CHAQUE TABLEAU. J'UTILISE DONC UNE BOUCLE FOR
+	//------------ CALCUL DE "PRIORITE" : JE VAIS AVOIR BESOIN DE RECUPERER LA PREMIERE VALEUR DE CHAQUE TABLEAU. J'UTILISE DONC UNE BOUCLE FOR
 	tabMean = priorityTab(tabCritere, average, tabMean)
 
-	// --CALCUL DE "SOMME PONDEREE PAR LES PRIORITE". MEME PRINCIPE, MAIS AVEC LE TABLEAU DES INPUT, COLONNE PAR COLONNE
+	//------------ CALCUL DE "SOMME PONDEREE PAR LES PRIORITE". MEME PRINCIPE, MAIS AVEC LE TABLEAU DES INPUT, COLONNE PAR COLONNE
 	let sommePonderee = priorityWeightedSum(tabColumnFinal, tabMean)
 
-	// --CALCUL DE "SOMME PONDEREE DIVISEE PAR LA PRIORITE". BEAUCOUP PLUS FACILE CETTE FOIS :)
+	//------------ CALCUL DE "SOMME PONDEREE DIVISEE PAR LA PRIORITE". BEAUCOUP PLUS FACILE CETTE FOIS :)
 	let sommePondereeSurPriorite = weightedSumDividedByPriority(sommePonderee, tabMean)
 	
 	// AFFICHER L'ELEMENT
@@ -99,7 +99,6 @@ function priorityWeightedSum(tabColumnFinal, tabMean){
 
 function weightedSumDividedByPriority(sommePonderee, tabMean){
 	let sommePondereeSurPriorite = []
-	// JE REPETE PAR LE NOMBRE DE FOIS QU'IL Y A DE CRITERES
 	for (var i = 0; i < nbrClass.value; i++) {
 		sommePondereeSurPriorite.push(sommePonderee[i] / tabMean[i])
 	}
@@ -109,11 +108,11 @@ function weightedSumDividedByPriority(sommePonderee, tabMean){
 function significatifRi(){
 	document.getElementById("cr").style.backgroundColor = '#3EDB00'
 	document.getElementById("alerteCr").style.visibility = 'hidden'
-	document.querySelector("#conteneurTablePoids table").style.backgroundColor = '#C0FFB9'
+	document.querySelector("#conteneurTablePoids table").style.backgroundColor = '#3FCF00'
 }
 
 function nonSignificatifRi(){
 	document.getElementById("cr").style.backgroundColor = '#BC0000'
 	document.getElementById("alerteCr").style.visibility = 'visible'
-	document.querySelector("#conteneurTablePoids table").style.backgroundColor = '#FFB8B8'
+	document.querySelector("#conteneurTablePoids table").style.backgroundColor = '#FF5252'
 }

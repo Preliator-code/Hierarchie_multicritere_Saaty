@@ -5,15 +5,24 @@
   padding: 0;
 }
 html, body { 
-	min-height: 100vh; /* 1 */
-	display: flex; /* 2 */
-	flex-direction: column; /* 3 */
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
 	font : 12px/1.5 "Muli", "Helvetica Neue", Arial, Helvetica, sans-serif;
-	background-color: #AAAAAA;
+	background-color: #B6B6B6;
 }
 
 #contenu {
-	flex-grow:1; /* 4 */
+	flex-grow:1;
+}
+
+input{
+	height: 20px;
+	padding-left: 10px;
+	border-radius: 20px;
+	outline: none;
+  	border: none;
+  	box-shadow: 2px 2px 1px black;
 }
 
 /*---- HEADER ----*/
@@ -55,15 +64,6 @@ nav a:hover{
 	box-shadow: 2px 2px 2px black;
 }
 
-input{
-	height: 20px;
-	padding-left: 10px;
-	border-radius: 20px;
-	outline: none;
-  	border: none;
-  	box-shadow: 2px 2px 1px black;
-}
-
 /*---- ENTREE NOMBRE DE CLASSES ----*/
 
 #conteneurEntreNbrClasses{
@@ -79,10 +79,12 @@ input{
 }
 
 #nbrClass{
-	width: 50px;
+	width: 54px;
 	height: 30px;
 	font-size: 1em;
 }
+
+/*---- LE CORPS GENERAL ----*/
 
 #conteneurTotal{
 	position: relative;
@@ -279,4 +281,10 @@ footer p{
 
 #tabPoids th, #tabPoids td{
 	border: 1px solid black;
+}
+
+/*---- BIBLIO ----*/
+
+#header + p{
+	padding: 10px;
 }
