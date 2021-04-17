@@ -4,16 +4,16 @@ let conteneurAllWithoutCritere = document.getElementsByClassName("conteneur")
 // CONVERTIR EN LISTE
 conteneurAllWithoutCritere = Array.prototype.slice.call(conteneurAllWithoutCritere)
 
-// ENLEVER LA DIV QUI AFFICHE LE NOMBRE DE CRITERE (PAS NECESSAIRE DE CACHER/AFFICHER CELLE CI)
+// ENLEVER LA DIV QUI AFFICHE LE NOMBRE DE CRITERES (PAS NECESSAIRE DE CACHER/AFFICHER CELLE CI)
 conteneurAllWithoutCritere.shift()
 
+// JE SELECTIONNE LES AUTRES DIV
 let conteneurEnTete = document.getElementById('conteneurTabEnTete');
 let conteneurMulti = document.getElementById('conteneurTabMulti');
 let conteneurTablePoids = document.getElementById('conteneurTablePoids').innerHTML;
-let titre = Array.prototype.slice.call(document.getElementsByTagName('h2'))
-titre.pop()
 let inputTabMulti;
 
+// LE NOMBRE DE CLASSES ENTRE EST INFERIEUR A 3 ? JE LANCE L'UNE OU L'AUTRE FONCTION
 function entreNbrClasses(nbrClasses){
 	let nbrClass = nbrClasses;
 	(parseInt(nbrClass.value) < 3 || nbrClass.value.length === 0) ? termine() : action();
@@ -31,12 +31,13 @@ function action(){
 	conteneurAllWithoutCritere[1].style.visibility = 'visible'
 	document.getElementById('alerteNbrCritere').style.visibility = 'hidden';
 
-	// JE CREE LA MATRICE ET PREPARE LE TABLEAU DE POIDS, POUR POUVOIR MODIFIER EN TEMPS REEL LE NOM DES CRITERES EN MEME TEMPS QUE CEUX DE LA MATRICE
+	// JE CREE LA MATRICE ET PREPARE LE TABLEAU DE POIDS POUR POUVOIR MODIFIER EN TEMPS REEL LE NOM DES CRITERES EN MEME TEMPS QUE CEUX DE LA MATRICE
 	prepareTabMulti();
 	prepareTabWeight();
 
 	// JE DONNE LA POSSIBILITE D'ENTRER LE NOM DE CHAQUE CRITERE AVEC UN EVENEMENT DE TYPE "input"
 	setHeader(document.querySelectorAll(".entreeEnTete"), document.querySelectorAll("#tabMulti th"), document.querySelectorAll("#tabPoids .enTete"))
 
+	// JE LANCE LA FONCTION QUI CONTROLE GENERALEMENT LES TABLEAUX
 	controlMain()
 }

@@ -38,15 +38,9 @@ function calculIndices(tabColumnFinal, inputTabMulti){
 
 	//------------ CALCUL ET AFFICHAGE DU RATIO DE COHERENCE (CR)
 	let ratioDeCoherence = indiceDeCoherence / ri
-	document.getElementById("cr").innerHTML = (ratioDeCoherence * 100).toFixed(2) + ' %'
-	if ((ratioDeCoherence * 100) < 10) {
-		document.getElementById("cr").style.backgroundColor = '#3EDB00'
-		document.getElementById("alerteCr").style.visibility = 'hidden'
-	}
-	if ((ratioDeCoherence * 100) >= 10) {
-		document.getElementById("cr").style.backgroundColor = '#BC0000'
-		document.getElementById("alerteCr").style.visibility = 'visible'
-	}
+	document.getElementById("cr").innerHTML = (ratioDeCoherence * 100).toFixed(2) + ' %';
+
+	((ratioDeCoherence * 100) < 10) ? significatifRi() : nonSignificatifRi()
 	fillTabWeight(tabMean)
 }
 
@@ -110,4 +104,16 @@ function weightedSumDividedByPriority(sommePonderee, tabMean){
 		sommePondereeSurPriorite.push(sommePonderee[i] / tabMean[i])
 	}
 	return sommePondereeSurPriorite
+}
+
+function significatifRi(){
+	document.getElementById("cr").style.backgroundColor = '#3EDB00'
+	document.getElementById("alerteCr").style.visibility = 'hidden'
+	document.querySelector("#conteneurTablePoids table").style.backgroundColor = '#C0FFB9'
+}
+
+function nonSignificatifRi(){
+	document.getElementById("cr").style.backgroundColor = '#BC0000'
+	document.getElementById("alerteCr").style.visibility = 'visible'
+	document.querySelector("#conteneurTablePoids table").style.backgroundColor = '#FFB8B8'
 }
