@@ -39,9 +39,9 @@ function calculIndices(tabColumnFinal, inputTabMulti){
 	//------------ CALCUL ET AFFICHAGE DU RATIO DE COHERENCE (CR)
 	let ratioDeCoherence = indiceDeCoherence / ri
 	document.getElementById("cr").innerHTML = (ratioDeCoherence * 100).toFixed(2) + ' %';
-
 	((ratioDeCoherence * 100) < 10) ? significatifRi() : nonSignificatifRi()
 	fillTabWeight(tabMean)
+	exportCSV()
 }
 
 function calculRi(){
