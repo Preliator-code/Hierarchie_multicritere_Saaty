@@ -259,6 +259,16 @@ footer p{
 	margin-left: 100px;
 }
 
+#conteneurTablePoids img{
+	width: 25px;
+	margin-left: 10px;
+}
+
+#conteneurTablePoids img:hover{
+	width: 27px;
+	cursor: pointer;
+}
+
 #conteneurTablePoids table{
 	background-color: #8D8D8D;
 	height: calc(100% - (36px + 15px))
