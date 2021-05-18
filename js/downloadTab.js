@@ -2,14 +2,13 @@ let csv;
 
 function convertCsv(){
 	// CONVERTIR L'OBJET EN TABLEAU DE TABLEAUX
-	const data = jsonCompoFinale.map(obj => [
-        obj.numeroCompo,
-        obj.compositionPersonnes,
-        obj.scoreEquipe
+	const data = toExportObject.map(obj => [
+        obj.critName,
+        obj.weightCrit,
     ]);
 
     // CREER MES CHAMPS
-	const fields = ['Numero_Compo', 'Personnes', 'Score_equipe'];
+	const fields = ['Nom_Criteres', 'Poids'];
 
 	// CREER UN OBJET CONFIG AVEC TOUTE LES CONFIGURATIONS POSSIBLES
 	let config = {
@@ -18,6 +17,7 @@ function convertCsv(){
 		escapeChar: '"',
 		delimiter: ";",
 		header: true,
+		encoding: "UTF-8",
 		newline: "\r\n",
 		skipEmptyLines: false, //other option is 'greedy', meaning skip delimiters, quotes, and whitespace.
 		columns: null //or array of strings
@@ -25,12 +25,14 @@ function convertCsv(){
 
 	// CREER LE CSV
 	csv = Papa.unparse({
-        data,
+		data,
         fields
     }, config);
 }
 
 function exportCSV(){
+	convertCsv()
+
 	// CONVERTIR LE CSV EN OBJET "blob JS"
 	const blob = new Blob([csv]);
 
@@ -39,7 +41,7 @@ function exportCSV(){
 	a.href = URL.createObjectURL(blob, { type: 'text/plain' });
 
 	// DONNER UN NOM AU CSV
-	a.download = 'Optimisation_des_groupes.csv';
+	a.download = 'Criteres_et_poids.csv';
 
 	// GENERER LE CLIC SUR LE LIEN. JE DOIS AJOUTER LA BALISE AU DOM, SIMULER LE CLIC, ET SUPPRIMER LA BALISE HYPERLIEN DU DOM
 	document.body.appendChild(a);

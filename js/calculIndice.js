@@ -1,48 +1,4 @@
-function calculIndices(tabColumnFinal, inputTabMulti){
-	let meanOfEigenValue;
-	let ri;
-	let tabMean = []
-	let numColumn = 0
-	tabColumn = []
-	tabValue = []
-	let sommeTableau
-
-	//------------ CALCUL DU RI
-	ri = calculRi()
-
-	//------------ CALCUL DE LA VALEUR PROPRE MAXIMALE DE CHAQUE FACTEUR DANS LE TABLEAU DE LA MATRICE
-	calculValeurPropreMax(tabColumnFinal, numColumn)
-	
-	// JE RECUPERE UN TABLEAU A DOUBLE DIMENSION QUI CONPORTE CHAQUE VALEUR DIVISE PAR LA SOMME DE LA COLONNE (PREMIERE PARTIE DU TABLEAU A DROITE DE L'EXCEL)
-	let tabCritere = convertToDoubleDimension(tabColumn, tabValue);
-
-	// POUR LA SUITE, JE PREPARE UNE LIGNE POUR CALCULER LA MOYENNE D'UN TABLEAU
-	let average = arr => arr.reduce( ( p, c ) => p + c, 0 ) / arr.length;
-
-	//------------ CALCUL DE "PRIORITE" : JE VAIS AVOIR BESOIN DE RECUPERER LA PREMIERE VALEUR DE CHAQUE TABLEAU. J'UTILISE DONC UNE BOUCLE FOR
-	tabMean = priorityTab(tabCritere, average, tabMean)
-
-	//------------ CALCUL DE "SOMME PONDEREE PAR LES PRIORITE". MEME PRINCIPE, MAIS AVEC LE TABLEAU DES INPUT, COLONNE PAR COLONNE
-	let sommePonderee = priorityWeightedSum(tabColumnFinal, tabMean)
-
-	//------------ CALCUL DE "SOMME PONDEREE DIVISEE PAR LA PRIORITE". BEAUCOUP PLUS FACILE CETTE FOIS :)
-	let sommePondereeSurPriorite = weightedSumDividedByPriority(sommePonderee, tabMean)
-	
-	// AFFICHER L'ELEMENT
-	let coherenceMoyenne = average(sommePondereeSurPriorite)
-	document.getElementById("valeurPropre").innerHTML = coherenceMoyenne.toFixed(2)
-
-	//------------ CALCUL ET AFFICHAGE DE L'INDICE DE COHERENCE (CI)
-	let indiceDeCoherence = (coherenceMoyenne - nbrClass.value) / (nbrClass.value - 1)
-	document.getElementById("ci").innerHTML = indiceDeCoherence.toFixed(2)
-
-	//------------ CALCUL ET AFFICHAGE DU RATIO DE COHERENCE (CR)
-	let ratioDeCoherence = indiceDeCoherence / ri
-	document.getElementById("cr").innerHTML = (ratioDeCoherence * 100).toFixed(2) + ' %';
-	((ratioDeCoherence * 100) < 10) ? significatifRi() : nonSignificatifRi()
-	fillTabWeight(tabMean)
-	exportCSV()
-}
+let toExportObject = []
 
 function calculRi(){
 	meanOfEigenValue = ((2.7699*nbrClass.value)-4.3513)
@@ -115,4 +71,61 @@ function nonSignificatifRi(){
 	document.getElementById("cr").style.backgroundColor = '#BC0000'
 	document.getElementById("alerteCr").style.visibility = 'visible'
 	document.querySelector("#conteneurTablePoids table").style.backgroundColor = '#FF5252'
+}
+
+function calculIndices(tabColumnFinal, inputTabMulti){
+	let meanOfEigenValue;
+	let ri;
+	let tabMean = [];
+	let numColumn = 0;
+	tabColumn = [];
+	tabValue = [];
+	let sommeTableau;
+	let i = 0;
+	toExportObject = [];
+
+	//------------ CALCUL DU RI
+	ri = calculRi()
+
+	//------------ CALCUL DE LA VALEUR PROPRE MAXIMALE DE CHAQUE FACTEUR DANS LE TABLEAU DE LA MATRICE
+	calculValeurPropreMax(tabColumnFinal, numColumn)
+	
+	// JE RECUPERE UN TABLEAU A DOUBLE DIMENSION QUI CONPORTE CHAQUE VALEUR DIVISE PAR LA SOMME DE LA COLONNE (PREMIERE PARTIE DU TABLEAU A DROITE DE L'EXCEL)
+	let tabCritere = convertToDoubleDimension(tabColumn, tabValue);
+	
+	// POUR LA SUITE, JE PREPARE UNE LIGNE POUR CALCULER LA MOYENNE D'UN TABLEAU
+	let average = arr => arr.reduce( ( p, c ) => p + c, 0 ) / arr.length;
+
+	//------------ CALCUL DE "PRIORITE" : JE VAIS AVOIR BESOIN DE RECUPERER LA PREMIERE VALEUR DE CHAQUE TABLEAU. J'UTILISE DONC UNE BOUCLE FOR
+	tabMean = priorityTab(tabCritere, average, tabMean);
+
+	//------------ CREER UN OBJET QUI CONTIENDRA LES ELEMENTS INTERESSANTS A EXPORTER EN CSV
+	document.querySelectorAll("#tabPoids .enTete").forEach(element => {
+		toExportObject.push({
+			critName: element.firstChild.nodeValue,
+			weightCrit: tabMean[i].toFixed(2)
+		});
+		i += 1
+	});
+
+	//------------ CALCUL DE "SOMME PONDEREE PAR LES PRIORITE". MEME PRINCIPE, MAIS AVEC LE TABLEAU DES INPUT, COLONNE PAR COLONNE
+	let sommePonderee = priorityWeightedSum(tabColumnFinal, tabMean)
+
+	//------------ CALCUL DE "SOMME PONDEREE DIVISEE PAR LA PRIORITE". BEAUCOUP PLUS FACILE CETTE FOIS :)
+	let sommePondereeSurPriorite = weightedSumDividedByPriority(sommePonderee, tabMean)
+	
+	// AFFICHER L'ELEMENT
+	let coherenceMoyenne = average(sommePondereeSurPriorite)
+	document.getElementById("valeurPropre").innerHTML = coherenceMoyenne.toFixed(2)
+
+	//------------ CALCUL ET AFFICHAGE DE L'INDICE DE COHERENCE (CI)
+	let indiceDeCoherence = (coherenceMoyenne - nbrClass.value) / (nbrClass.value - 1)
+	document.getElementById("ci").innerHTML = indiceDeCoherence.toFixed(2)
+
+	//------------ CALCUL ET AFFICHAGE DU RATIO DE COHERENCE (CR)
+	let ratioDeCoherence = indiceDeCoherence / ri
+	document.getElementById("cr").innerHTML = (ratioDeCoherence * 100).toFixed(2) + ' %';
+	((ratioDeCoherence * 100) < 10) ? significatifRi() : nonSignificatifRi()
+	fillTabWeight(tabMean)
+	console.log(tabMean);
 }
